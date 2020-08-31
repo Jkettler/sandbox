@@ -5,6 +5,7 @@ import 'froala-editor/js/froala_editor.pkgd.min.js';
 
 // Require Editor CSS files.
 import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/css/plugins/line_breaker.min.css';
 
 // Require Font Awesome.
 import 'font-awesome/css/font-awesome.css';
@@ -18,13 +19,19 @@ import 'froala-editor/js/plugins/table.min';
 import 'froala-editor/js/plugins/colors.min';
 import 'froala-editor/js/plugins/inline_style.min';
 import 'froala-editor/js/plugins/font_size.min';
+import 'froala-editor/js/plugins/font_family.min';
+import 'froala-editor/js/plugins/line_breaker.min';
+import 'froala-editor/js/plugins/line_height.min';
 import 'froala-editor/js/plugins/lists.min';
+import 'froala-editor/js/plugins/word_paste.min';
 import { encode, decode } from 'js-base64';
 
 // Include font-awesome css if required.
 // install using "npm install font-awesome --save"
 import 'font-awesome/css/font-awesome.css';
 import 'froala-editor/js/third_party/font_awesome.min.js';
+
+
 import "./App.css"
 import 'html5-device-mockups'
 import rehypeSanitize from "rehype-sanitize";
@@ -36,9 +43,53 @@ const schema = merge(gh, {tagNames: ["u"], attributes: {"*": ["style", "classNam
 
 
 function App() {
+  const COLORS = {
+    dark: "black",
+    white: "white",
+    disclaimerGrey: "#C9C9C9",
+    textBoxBackground: "#FBFBFB",
+    textBoxBottom: "#ebebeb",
+    googleRed: "#C05154",
+    facebookBlue: "#4669B3",
+    lightgray: '#E9E6E6',
+    darkGolfBlue: "#194866",
+    profileIcon: "#BFD4FA",
+    starRating: '#ebce6c',
+    pink: "#FF5BED",
+    checkboxGreen: '#47D250',
+    checkboxRed: '#EB4B43',
+    pickSelectionNavy: "#142649",
+    tabBarYellow: "#F6E264",
+    neonPink: "#FF5BEE",
+    faintPink: "#E4BBDD",
+    barelyBlue: "#EEF7F7",
+    darkTeal: "#398597",
+    lightBlue: "#EEF7F7",
+    background: "#FFFBF7",
+    teal: "#90F5F7",
+    inactiveGray: "#A8A8A8",
+    borderGray: "#D3D3D3",
+    lightNeonBlue: "#90F5F7",
+    tabGrey: "#7D95A3",
+  };
+
   const config = {
-    placeholderText: 'Edit Me',
-    charCounterCount: false
+    placeholderText: 'Content Goes Here',
+    charCounterCount: false,
+    colorsStep: 10,
+    colorsText: Object.values(COLORS),
+    colorsBackground: Object.values(COLORS),
+    inlineStyles: {
+      'Chirp Pink': 'font-family: Pinyon Script,cursive; font-size: 20pt; color: #FF5BED;',
+      'Chirp Blue': 'font-family: Federo,sans-serif; color: #194866'
+    },
+    fontFamily: {
+      "Pinyon Script,cursive": "Pinyon",
+      "Federo,sans-serif": "Federo",
+    },
+    fontFamilySelection: true,
+    fontSize: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '24', '30', '36', '48', '60', '72', '96'],
+    fontSizeUnit: 'pt'
   };
 
   const [htmlModel, setHtmlModel] = useState('');
@@ -54,10 +105,10 @@ function App() {
       .process(String(htmlModel), (err, f) => setSanitizedHtml(String(f)))
   }, [htmlModel])
 
-  const style = {
+  const displayBoxStyle = {
     border: "2px solid black",
     margin: "auto",
-    width: "80%",
+    width: "90%",
     height: "50%",
     position: "relative",
     top: "3em",
@@ -83,12 +134,9 @@ function App() {
         <div className="device-wrapper">
           <div className="device" data-device="iPhone7" data-orientation="portrait" data-color="black">
             <div style={{backgroundColor: "white"}} className={"screen"}>
-              <div style={style}>
-              <FroalaEditorView style={{backgroundColor: 'whitesmoke'}} model={sanitizedHtml + stylez} />
+              <div style={displayBoxStyle}>
+                <FroalaEditorView style={{backgroundColor: 'whitesmoke'}} model={sanitizedHtml + stylez} />
               </div>
-            </div>
-            <div className="button">
-
             </div>
           </div>
         </div>
@@ -118,3 +166,4 @@ const stylez = `
 `
 
 export default App;
+
