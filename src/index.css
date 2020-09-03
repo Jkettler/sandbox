@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Superette';
+  src: local('Superette-Medium'), url(/fonts/Superette/Superette-Medium.tff) format('truetype');
+}

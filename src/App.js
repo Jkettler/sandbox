@@ -42,6 +42,17 @@ const merge = require('deepmerge');
 const schema = merge(gh, {tagNames: ["u"], attributes: {"*": ["style", "className"]}})
 
 
+
+export const FONTS = {
+  medium: "FoundersGrotesk-Medium",
+  bold: "FoundersGrotesk-Bold",
+  regular: "FoundersGrotesk-Regular",
+  semiBold: "FoundersGrotesk-Semibold",
+  superette: "Superette-Medium",
+  superetteBold: "Superette-Bold",
+  superetteSemiBold: "Superette-Semibold",
+};
+
 function App() {
   const COLORS = {
     dark: "black",
@@ -79,17 +90,16 @@ function App() {
     colorsStep: 10,
     colorsText: Object.values(COLORS),
     colorsBackground: Object.values(COLORS),
+    useClasses: false,
     inlineStyles: {
-      'Chirp Pink': 'font-family: Pinyon Script,cursive; font-size: 20pt; color: #FF5BED;',
-      'Chirp Blue': 'font-family: Federo,sans-serif; color: #194866'
+      'Chirp Pink': `font-family: Superette-Medium; font-size: 20pt; color: #FF5BED;`
     },
     fontFamily: {
-      "Pinyon Script,cursive": "Pinyon",
-      "Federo,sans-serif": "Federo",
+      "Superette-Medium": "Superette"
     },
     fontFamilySelection: true,
     fontSize: ['8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '24', '30', '36', '48', '60', '72', '96'],
-    fontSizeUnit: 'pt'
+    fontSizeUnit: 'px'
   };
 
   const [htmlModel, setHtmlModel] = useState('');
@@ -108,11 +118,14 @@ function App() {
   const displayBoxStyle = {
     border: "2px solid black",
     margin: "auto",
-    width: "90%",
-    height: "50%",
+    padding: "2px",
+    overscrollBehavior: "contain",
+    width: "95%",
+    height: "32%",
     position: "relative",
     top: "3em",
   }
+  const header = `<head><meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width"></head>`
 
   return (
     <div style={{ margin: "2em"}}>
@@ -127,20 +140,20 @@ function App() {
       <div style={{margin: 10}}>
         Html:
         <div style={{flex: 0.75}}>
-          {htmlModel}
+          {sanitizedHtml}
         </div>
       </div>
-      <div style={{flex: 1, alignSelf: "center"}}>
-        <div className="device-wrapper">
-          <div className="device" data-device="iPhone7" data-orientation="portrait" data-color="black">
-            <div style={{backgroundColor: "white"}} className={"screen"}>
-              <div style={displayBoxStyle}>
-                <FroalaEditorView style={{backgroundColor: 'whitesmoke'}} model={sanitizedHtml + stylez} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/*<div style={{flex: 1, alignSelf: "center"}}>*/}
+      {/*  <div className="device-wrapper">*/}
+      {/*    <div className="device" data-device="iPhone7" data-orientation="portrait" data-color="black">*/}
+      {/*      <div style={{backgroundColor: "white"}} className={"screen"}>*/}
+      {/*        <div style={displayBoxStyle}>*/}
+      {/*          <FroalaEditorView model={header + htmlModel} />*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   );
 }
